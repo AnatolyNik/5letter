@@ -21,6 +21,7 @@ COLORS = {
     "success": get_color_from_hex("#03dac6"),
     "warning": get_color_from_hex("#ffc107"),
 }
+Font_size_input = 26
 
 class WordFilterApp(App):
     def build(self):
@@ -28,30 +29,30 @@ class WordFilterApp(App):
         self.words = words_from_txt
         self.layout = BoxLayout(
             orientation="vertical", 
-            padding=30,  # Увеличенный padding
+            padding=30,
             spacing=20,  # Увеличенный spacing
         )
 
-        # Заголовок (шрифт 48 вместо 24)
+        # Заголовок
         self.title_label = Label(
             text="5 Букв", 
-            font_size=28,  # Увеличен в 2 раза
+            font_size=Font_size_input,
             bold=True,
             color=COLORS["text_dark"],
-            size_hint=(1, 0.01),  # Увеличен размер
+            size_hint=(1, 0.01),
         )
         self.layout.add_widget(self.title_label)
 
-        # Поле ввода для букв, которых НЕТ в слове (шрифт 32 вместо 16)
+        # Поле ввода для букв, которых НЕТ в слове
         self.not_in_word_input = TextInput(
             hint_text="Буквы, которых нет в слове (например: абв)",
             multiline=False,
-            size_hint=(1, 0.05),  # Увеличен размер
+            size_hint=(1, 0.1),
             background_color=(1, 1, 1, 0.9),
             foreground_color=COLORS["error"],
             hint_text_color=(0.5, 0.5, 0.5, 0.7),
-            padding=20,  # Увеличенный padding
-            font_size=32,  # Увеличен в 2 раза
+            padding=5,
+            font_size=Font_size_input,
         )
         self.layout.add_widget(self.not_in_word_input)
 
@@ -59,37 +60,37 @@ class WordFilterApp(App):
         self.in_word_input = TextInput(
             hint_text="Буквы, которые есть в слове (например: гд)",
             multiline=False,
-            size_hint=(1, 0.05),  # Увеличен размер
+            size_hint=(1, 0.1),
             background_color=(1, 1, 1, 0.9),
             foreground_color=COLORS["success"],
             hint_text_color=(0.5, 0.5, 0.5, 0.7),
-            padding=20,  # Увеличенный padding
-            font_size=32,  # Увеличен в 2 раза
+            padding=5,
+            font_size=Font_size_input,
         )
         self.layout.add_widget(self.in_word_input)
 
         # Поля ввода для букв на своих местах
-        self.letter_box = BoxLayout(orientation='vertical', size_hint=(1, 0.05))  # Увеличен размер
+        self.letter_box = BoxLayout(orientation='vertical', spacing=20, size_hint=(1, 0.2))
         self.letter_box.add_widget(
             Label(
                 text="Буквы на своих местах", 
-                font_size=18,  # Увеличен в 2 раза
+                font_size=Font_size_input,
                 color=COLORS["text_dark"],
-                size_hint=(1, 0.1),
+                size_hint=(1, 0.5),
             )
         )
 
-        self.letter_layout = BoxLayout(orientation='horizontal', spacing=15, size_hint=(1, 0.7))
+        self.letter_layout = BoxLayout(orientation='horizontal', spacing=20, size_hint=(1, 1))
         self.letter_inputs = []
         for i in range(5):
             text_input = TextInput(
                 text='',
                 multiline=False,
                 size_hint=(None, 1),
-                width=80,  # Увеличен размер
+                width=50,
                 background_color=(1, 1, 1, 0.9),
                 foreground_color=COLORS["warning"],
-                font_size=36,  # Увеличен в 2 раза
+                font_size=Font_size_input,
                 halign="center",
             )
             text_input.bind(text=self.update_letter)
@@ -99,13 +100,13 @@ class WordFilterApp(App):
         self.letter_box.add_widget(self.letter_layout)
         self.layout.add_widget(self.letter_box)
 
-        # Кнопка фильтрации (шрифт 32 вместо 16)
+        # Кнопка фильтрации
         self.filter_button = Button(
             text="Найти слова",
-            size_hint=(1, 0.05),  # Увеличен размер
+            size_hint=(1, 0.15),
             background_color=COLORS["primary"],
             color=COLORS["text_light"],
-            font_size=28,  # Увеличен в 2 раза
+            font_size=Font_size_input,
             bold=True,
         )
         self.filter_button.bind(on_press=self.animate_button)
@@ -113,7 +114,7 @@ class WordFilterApp(App):
         self.layout.add_widget(self.filter_button)
 
         # Область результатов с прокруткой
-        self.scroll_view = ScrollView(size_hint=(1, 0.6))  # Увеличен размер
+        self.scroll_view = ScrollView(size_hint=(1, 0.6))
         self.results_layout = GridLayout(cols=1, spacing=15, size_hint_y=None)  # Увеличен spacing
         self.results_layout.bind(minimum_height=self.results_layout.setter("height"))
         self.scroll_view.add_widget(self.results_layout)
@@ -149,9 +150,9 @@ class WordFilterApp(App):
                 Label(
                     text="Нет подходящих слов!", 
                     color=COLORS["error"],
-                    font_size=32,  # Увеличен в 2 раза
+                    font_size=32,
                     size_hint_y=None,
-                    height=60,  # Увеличен размер
+                    height=60,
                 )
             )
         else:
@@ -160,10 +161,10 @@ class WordFilterApp(App):
                     Label(
                         text=word.upper(),
                         color=COLORS["text_dark"],
-                        font_size=36,  # Увеличен в 2 раза
+                        font_size=36,
                         bold=True,
                         size_hint_y=None,
-                        height=70,  # Увеличен размер
+                        height=70,
                     )
                 )
 
